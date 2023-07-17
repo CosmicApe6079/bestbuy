@@ -1,12 +1,17 @@
 class Product:
     def __init__(self, name, price, quantity):
         if not name or price < 0 or quantity < 0:
-            raise Exception("Invalid input")
-
+            raise ValueError("Invalid product details")
         self.name = name
         self.price = price
         self.quantity = quantity
-        self.active = True
+        self.active = quantity > 0
+
+    def purchase(self, purchase_quantity):
+        if purchase_quantity > self.quantity:
+            raise ValueError("Insufficient quantity")
+        self.quantity -= purchase_quantity
+        return f"You purchased {purchase_quantity} units of {self.name}."
 
     def get_quantity(self):
         return float(self.quantity)
