@@ -44,3 +44,21 @@ class Product:
 
         return total_price
 
+class SpecialProduct(Product):
+    def __init__(self, name, price, quantity, special_feature):
+        super().__init__(name, price, quantity)
+        self.special_feature = special_feature
+
+    def show(self):
+        base_info = super().show()
+        return f"{base_info}, Special Feature: {self.special_feature}"
+
+
+class DiscountedProduct(Product):
+    def __init__(self, name, price, quantity, discount_rate):
+        super().__init__(name, price, quantity)
+        self.discount_rate = discount_rate
+
+    def show(self):
+        base_info = super().show()
+        return f"{base_info}, Discount Rate: {self.discount_rate}%"
