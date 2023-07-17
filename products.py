@@ -44,21 +44,32 @@ class Product:
 
         return total_price
 
-class SpecialProduct(Product):
-    def __init__(self, name, price, quantity, special_feature):
-        super().__init__(name, price, quantity)
-        self.special_feature = special_feature
+class NonStockedProduct(Product):
+    def __init__(self, name, price):
+        super().__init__(name, price, 0)
+        self.set_quantity(0)
 
-    def show(self):
-        base_info = super().show()
-        return f"{base_info}, Special Feature: {self.special_feature}"
+    def set_quantity(self, quantity):
+        if quantity != 0:
+            raise ValueError("Non-stocked products should have a quantity of 0.")
+        super().set_quantity(0)
+
+    def purchase(self, purchase_quantity):
+        raise ValueError("Non-stocked products cannot be purchased.")
 
 
-class DiscountedProduct(Product):
-    def __init__(self, name, price, quantity, discount_rate):
-        super().__init__(name, price, quantity)
-        self.discount_rate = discount_rate
+class LimitedProduct(Product):
+    def __init__(self, name, price, max_quantity):
+        super().__init__(name, price, max_quantity)
+        self.max_quantity = max_quantity
 
-    def show(self):
-        base_info = super().show()
-        return f"{base_info}, Discount Rate: {self.discount_rate}%"
+    def set_quantity(self, quantity):
+        if quantity > self.max_quantity:
+            raise ValueError("Quantity exceeds the maximum allowed quantity.")
+        super().set_quantity(quantity)
+
+    def purchase(self, purchase_quantity):
+        if purchase_quantity > self.max_quantity:
+            raise ValueError("Exceeded maximum allowed quantity.")
+        super().purchase(purchase_quantity)
+
