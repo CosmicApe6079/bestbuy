@@ -1,5 +1,7 @@
-from products import Product
+from bestbuy import products, store
+from products import Product as BaseProduct
 from store import Store
+
 
 def start(store_obj):
     while True:
@@ -54,11 +56,12 @@ def start(store_obj):
 
 if __name__ == "__main__":
     # Setup initial stock of inventory
-    product_list = [Product("MacBook Air M2", price=1450, quantity=100),
-                    Product("Bose QuietComfort Earbuds", price=250, quantity=500),
-                    Product("Google Pixel 7", price=500, quantity=250)
-                   ]
-
-    best_buy = Store(product_list)
+    product_list = [products.Product("MacBook Air M2", price=1450, quantity=100),
+                    products.Product("Bose QuietComfort Earbuds", price=250, quantity=500),
+                    products.Product("Google Pixel 7", price=500, quantity=250),
+                    products.NonStockedProduct("Windows License", price=125),
+                    products.LimitedProduct("Shipping", price=10, max_quantity=1)
+                    ]
+    best_buy = store.Store(product_list)
     start(best_buy)
 

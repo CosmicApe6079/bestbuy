@@ -47,7 +47,6 @@ class Product:
 class NonStockedProduct(Product):
     def __init__(self, name, price):
         super().__init__(name, price, 0)
-        self.set_quantity(0)
 
     def set_quantity(self, quantity):
         if quantity != 0:
