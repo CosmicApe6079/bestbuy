@@ -6,6 +6,13 @@ class Product:
         self.price = price
         self.quantity = quantity
         self.active = quantity > 0
+        self.promotion = None
+
+    def set_promotion(self, promotion):
+        self.promotion = promotion
+
+    def get_promotion(self):
+        return self.promotion
 
     def purchase(self, purchase_quantity):
         if purchase_quantity > self.quantity:
