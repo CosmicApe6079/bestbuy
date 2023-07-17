@@ -1,5 +1,5 @@
 import pytest
-from product import Product
+from products import Product
 
 def test_create_normal_product():
     product = Product("Example Product", 10.99, 5)

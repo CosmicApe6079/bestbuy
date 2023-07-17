@@ -1,16 +1,64 @@
-# This is a sample Python script.
+from products import Product
+from store import Store
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+def start(store_obj):
+    while True:
+        print("Welcome to the Store!")
+        print("Please select an option:")
+        print("1. List all products in store")
+        print("2. Show total amount in store")
+        print("3. Make an order")
+        print("4. Quit")
 
+        choice = input("Enter your choice (1-4): ")
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+        if choice == "1":
+            print("All products in store:")
+            all_products = store_obj.get_all_products()
+            for product in all_products:
+                print(product.name)
+            print()
 
+        elif choice == "2":
+            total_quantity = store_obj.get_total_quantity()
+            print("Total amount in store:", total_quantity)
+            print()
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+        elif choice == "3":
+            shopping_list = []
+            while True:
+                product_title = input("Enter the product title (or 'done' to finish): ")
+                if product_title == "done":
+                    break
+                quantity = int(input("Enter the quantity: "))
+                product = store_obj.get_product_by_title(product_title)
+                if product is None:
+                    print("Product not found in store.")
+                else:
+                    shopping_list.append((product, quantity))
+            try:
+                total_price = store_obj.order(shopping_list)
+                print("Order placed successfully.")
+                print("Total price:", total_price)
+            except Exception as e:
+                print("Order failed:", str(e))
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+        elif choice == "4":
+            print("Quitting...")
+            break
+
+        else:
+            print("Invalid choice. Please try again.")
+
+        print()
+
+if __name__ == "__main__":
+    # Setup initial stock of inventory
+    product_list = [Product("MacBook Air M2", price=1450, quantity=100),
+                    Product("Bose QuietComfort Earbuds", price=250, quantity=500),
+                    Product("Google Pixel 7", price=500, quantity=250)
+                   ]
+
+    best_buy = Store(product_list)
+    start(best_buy)
+
